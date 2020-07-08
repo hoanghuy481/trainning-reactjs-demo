@@ -1,17 +1,16 @@
 import React from 'react';
-
-import PostsListPage from './pages/PostsListPage';
+import ListPostPage from './pages/ListPostPage';
 
 const routes = [
     {
         path: "/post",
         exact: true,
-        main: () => <PostsListPage />
+        main: () => <ListPostPage />
     },
     {
         path: "/",
         exact: true,
-        main: () => <PostsListPage />
+        main: () => <ListPostPage />
     }
 ];
 
