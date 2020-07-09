@@ -9,24 +9,19 @@ function ListPosts(props) {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        const fetchUser = () =>{
+        const fetch = () =>{
             setLoading(true);
             axios.get(`https://jsonplaceholder.typicode.com/users/${post.userId}`)
                 .then(res => {
                     setUser(res.data);
                 })
-            setLoading(false);
-        }
-        const fetchComments = () =>{
-            setLoading(true);
             axios.get(`https://jsonplaceholder.typicode.com/posts/${post.userId}/comments`)
                 .then(res => {
                     setComments(res.data);
                 })
             setLoading(false);
-        }
-        fetchUser();
-        fetchComments();
+        };      
+        fetch();
     }, [post.userId]);
 
     let total = null;

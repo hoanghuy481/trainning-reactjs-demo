@@ -12,27 +12,25 @@ function ListPostPage() {
     const [postPerPage] = useState(10);
 
     useEffect(() => {
-        const fetchPost = () =>{
+        const fetchPost = async () => {
             setLoading(true);
-            axios.get('https://jsonplaceholder.typicode.com/posts')
-                .then(res => {
-                    setPosts(res.data);
-                })     
+            const res = await axios.get('https://jsonplaceholder.typicode.com/posts');
+            setPosts(res.data);
             setLoading(false);
         }
         fetchPost();
     }, []);
-    
+
     const indexOfLastPost   = currentPage * postPerPage;
     const indexOfFirstPost  = indexOfLastPost - postPerPage;
     const currentPost       = posts.slice(indexOfFirstPost, indexOfLastPost);
-    const paginate = pageNumber => setCurrentPage(pageNumber);
-    
+    const paginate          = pageNumber => setCurrentPage(pageNumber);
+
     let xhtmlPost = null;
-    
-    if(loading){
+
+    if (loading) {
         return <h2>Loading...</h2>
-    } else{
+    } else {
         if (currentPost.length > 0) {
             xhtmlPost = currentPost.map((post, i) => {
                 return (
@@ -41,14 +39,13 @@ function ListPostPage() {
             });
         }
     }
-    
 
     return (
         <div>
             <div className="page-header">
                 <h1>Danh sách Post</h1>
             </div>
-            <Control/>
+            <Control />
             <table className="table">
                 <thead>
                     <tr>
@@ -62,8 +59,8 @@ function ListPostPage() {
                 </thead>
                 {xhtmlPost}
             </table>
-            <Pagination 
-                postPerPost={postPerPage} 
+            <Pagination
+                postPerPost={postPerPage}
                 totalPost={posts.length}
                 paginate={paginate}
             />

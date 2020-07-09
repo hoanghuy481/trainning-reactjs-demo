@@ -8,13 +8,12 @@ function Sort() {
                     Sort by <span className="caret" />
                 </button>
                 <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
-                    <li><a role="button">Created Date ASC</a></li>
-                    <li><a role="button">Created Date DESC</a></li>
+                    <li><a href=" #"role="button">Created Date ASC</a></li>
+                    <li><a href=" #"role="button">Created Date DESC</a></li>
                     <li role="separator" className="divider" />
-                    <li><a role="button">Total Comment ASC</a></li>
-                    <li><a role="button">Total Comment DESC</a></li>
+                    <li><a href=" #"role="button">Total Comment ASC</a></li>
+                    <li><a href=" #"role="button">Total Comment DESC</a></li>
                 </ul>
-
                 <span className="label label-success label-medium">sort</span>
             </div>
         </div>

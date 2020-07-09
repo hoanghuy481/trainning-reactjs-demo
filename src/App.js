@@ -1,29 +1,32 @@
 import React from 'react';
 import {
-	BrowserRouter as Router,
-	Route,
-	Switch
+    BrowserRouter as Router,
+    Route, 
+    Switch
 } from 'react-router-dom';
 
 import routes from './route-config';
+import UserProvider from './components/UserProvider';
 
 function App() {
 	return (
 		<Router>
-			<div id="wrapper">
-				{showRoute(routes)}
-			</div>
+			<UserProvider>
+				<div id="wrapper">
+					{showRoute(routes)}		
+				</div>
+			</UserProvider>
 		</Router>
 	);
 }
 
-function showRoute(routes) {
+function showRoute(routes){
 	let xhtml = null;
-
-	if (routes.length > 0) {
-		xhtml = routes.map((route, index) => {
+	
+	if(routes.length > 0 ){
+		xhtml = routes.map((route, index)=> {
 			return (
-				<Route key={index} exact={route.exact} path={route.path} component={route.main} />
+				<Route key={index} exact={route.exact} path={route.path} component={route.main}/>
 			);
 		});
 	}
