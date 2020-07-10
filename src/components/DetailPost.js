@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Link } from "react-router-dom";
 import axios from 'axios';
+import { isEmpty as _isEmpty } from 'lodash';
 
 import UserContext from '../context/UserContext';
 
@@ -12,7 +13,7 @@ function DetailPost(props) {
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
-            if(post.userId !== undefined){
+            if (post.userId !== undefined) {
                 const res = await axios.get(`https://jsonplaceholder.typicode.com/users/${post.userId}`);
                 setUser(res.data);
                 setLoading(false);
@@ -25,14 +26,14 @@ function DetailPost(props) {
 
     if (loading) {
         username = <p>Loading...</p>
-    } else {
+    } else if (!_isEmpty(user)) {
         username =
             <Link to={`../user-details/${user.id}`}>
                 {user.name}
             </Link>
     }
 
-    
+
     return (
         <div>
             <form>

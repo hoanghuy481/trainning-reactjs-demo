@@ -2,6 +2,7 @@ import React from 'react';
 
 function DetailUser(props) {
     let user = props.user;
+
     return (
         <div>
             <form>
@@ -55,7 +56,44 @@ function DetailUser(props) {
                         <input type="text" readOnly className="form-control-plaintext" defaultValue={user.company.catchPhrase} />
                     </div>
                 </div>
-
+                <h4>Adddress: </h4>
+                <div className="form-group row">
+                    <label className="col-sm-2 col-form-label">City</label>
+                    <div className="col-sm-10">
+                        <input type="text" readOnly className="form-control-plaintext" defaultValue={user.address.city} />
+                    </div>
+                </div>
+                <div className="form-group row">
+                    <label className="col-sm-2 col-form-label">Street</label>
+                    <div className="col-sm-10">
+                        <input type="text" readOnly className="form-control-plaintext" defaultValue={user.address.street} />
+                    </div>
+                </div>
+                <div className="form-group row">
+                    <label className="col-sm-2 col-form-label">Suite</label>
+                    <div className="col-sm-10">
+                        <input type="text" readOnly className="form-control-plaintext" defaultValue={user.address.suite} />
+                    </div>
+                </div>
+                <div className="form-group row">
+                    <label className="col-sm-2 col-form-label">Zipcode</label>
+                    <div className="col-sm-10">
+                        <input type="text" readOnly className="form-control-plaintext" defaultValue={user.address.zipcode} />
+                    </div>
+                </div>
+                <h5>Geo: </h5>
+                <div className="form-group row">
+                    <label className="col-sm-2 col-form-label">Lat</label>
+                    <div className="col-sm-10">
+                        <input type="text" readOnly className="form-control-plaintext" defaultValue={user.address.geo.lat} />
+                    </div>
+                </div>
+                <div className="form-group row">
+                    <label className="col-sm-2 col-form-label">Zipcode</label>
+                    <div className="col-sm-10">
+                        <input type="text" readOnly className="form-control-plaintext" defaultValue={user.address.geo.lng} />
+                    </div>
+                </div>
             </form>
         </div>
     );

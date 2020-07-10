@@ -3,6 +3,7 @@ import React from 'react';
 import ListPostPage from './pages/ListPostPage';
 import DetailPostPages from './pages/DetailPostPages';
 import DetailUserPages from './pages/DetailUserPages';
+import DetailCommentPages from './pages/DetailCommentPages';
 
 const routes = [
     {
@@ -24,6 +25,11 @@ const routes = [
         path: "/user-details/:id",
         exact: true,
         main: ({ match }) => <DetailUserPages match={match} />
+    },
+    {
+        path: "/comment-details/:id",
+        exact: true,
+        main: ({ match }) => <DetailCommentPages match={match} />
     }
 ];
 

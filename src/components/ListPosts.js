@@ -1,40 +1,41 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Link } from "react-router-dom";
 import axios from 'axios';
+import { isEmpty as _isEmpty } from 'lodash';
+import UserContext from '../context/UserContext';
 
 function ListPosts(props) {
     let post = props.post;
     const [user, setUser] = useState({});
+    const { posts, setPosts } = useContext(UserContext);
     const [comments, setComments] = useState([]);
     const [loading, setLoading] = useState(false);
-
     useEffect(() => {
-        const fetch = () =>{
+        const fetch = async () => {
             setLoading(true);
-            axios.get(`https://jsonplaceholder.typicode.com/users/${post.userId}`)
-                .then(res => {
-                    setUser(res.data);
-                })
-            axios.get(`https://jsonplaceholder.typicode.com/posts/${post.userId}/comments`)
-                .then(res => {
-                    setComments(res.data);
-                })
+            let resUser = await axios.get(`https://jsonplaceholder.typicode.com/users/${post.userId}`);
+            setUser(resUser.data);
+            let resComments = await axios.get(`https://jsonplaceholder.typicode.com/posts/${post.userId}/comments`);
+            setComments(resComments.data);
             setLoading(false);
-        };      
+            const newPosts = posts.map(post => ({ ...post, total: resComments.data.length }))
+            setPosts(newPosts)
+
+        };
         fetch();
-    }, [post.userId]);
+    }, [post.userId, setPosts, posts]);
 
     let total = null;
     let username = null;
-    
-    if(loading){
+
+    if (loading) {
         username = <td>Loading...</td>
         total = <td>Loading...</td>
-    } else{
-        username= <td>{user.name}</td>
-        total =  <td>{comments.length}</td>
+    } else if (!_isEmpty(comments, user)) {
+        username = <td>{user.name}</td>
+        total = <td>{comments.length}</td>
     }
-
+    console.log(posts);
     return (
         <tbody>
             <tr>
@@ -49,7 +50,7 @@ function ListPosts(props) {
                 {total}
                 <td>
                     <button className="btn btn-warning" type="button">Edit</button>
-                    <button  className="btn btn-danger" type="button">Delete</button>
+                    <button className="btn btn-danger" type="button">Delete</button>
                 </td>
             </tr>
         </tbody>
