@@ -20,7 +20,6 @@ function ListComment(props) {
     return (
         <tbody>
             <tr>
-                <th>{index + 1}</th>
                 <th>{comment.id}</th>
                 <th>
                     <Link to={`../comment-details/${comment.id}`}>

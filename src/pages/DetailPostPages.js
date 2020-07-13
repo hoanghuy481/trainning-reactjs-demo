@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { filter, includes, isEmpty as _isEmpty, orderBy as funcOrderBy } from 'lodash';
 
-import Control from '../components/Control';
+import ControlComment from '../components/ControlComment';
 import Pagination from '../components/Pagination';
 import DetailPost from '../components/DetailPost';
 import ListComment from '../components/ListComment';
@@ -55,7 +55,6 @@ function DetailPostPages(props) {
             setComments(commentsOrigin);
         }
     }
-    console.log(comments);
 
     if (loading) {
         xDetailPost = <h1>Loading...</h1>
@@ -83,11 +82,10 @@ function DetailPostPages(props) {
             <h1>Chi tiết Post</h1>
             {xDetailPost}
             <h1>Danh sách Comment</h1>
-            <Control onClickFilter={onClickFilter} sortByID={sortByID} />
+            <ControlComment idPost={id} onClickFilter={onClickFilter} sortByID={sortByID} />
             <table className="table">
                 <thead>
                     <tr>
-                        <th scope="col">STT</th>
                         <th scope="col">ID</th>
                         <th scope="col">Title</th>
                         <th scope="col">Created At</th>

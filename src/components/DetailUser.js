@@ -1,10 +1,11 @@
 import React from 'react';
-
+import { Link } from "react-router-dom";
 function DetailUser(props) {
     let user = props.user;
 
     return (
         <div>
+            <Link to={`/`}>về trang chủ</Link>
             <form>
                 <h4>Thông tin User: </h4>
                 <div className="form-group row">

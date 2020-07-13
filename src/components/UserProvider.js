@@ -5,11 +5,11 @@ import UserContext from '../context/UserContext'
 const UserProvider = (props) => {
     const [user, setUser] = useState({});
     const [posts, setPosts] = useState([]);
+    const [loading, setLoading] = useState(false);
     const [postsUpdate, setPostsUpdate] = useState([]);
     const [comments, setComments] = useState([]);
     const [orderBy, setOrderBy] = useState('id');
     const [orderDir, setOrderDir] = useState('asc');
-    const [postUpdate, setPostUpdate] = useState({});
     const [currentUser, setCurrentUser] = useState({
         id:         '1',
         Email:      'Sincere@april.biz',
@@ -21,8 +21,8 @@ const UserProvider = (props) => {
     return (
         <UserContext.Provider
             value={{
-                postUpdate,
-                setPostUpdate,
+                loading, 
+                setLoading,
                 currentUser,
                 setCurrentUser,
                 user,

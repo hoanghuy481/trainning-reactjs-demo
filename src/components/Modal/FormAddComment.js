@@ -3,16 +3,16 @@ import { Button, Modal } from 'react-bootstrap';
 
 import UserContext from '../../context/UserContext';
 
-function FormEditPost(props) {
-    let { item, index } = props;
-    const { posts, setPosts } = useContext(UserContext);
+function FormAddComment(props) {
+    const { posts, setPosts, currentUser } = useContext(UserContext);
+    let idPost = posts.length+1
     const [post, setPost] = useReducer(
         (state, newState) => ({ ...state, ...newState }),
         {
-            userId: item.userId,
-            id: item.id,
-            title: item.title,
-            body: item.body,
+            id: '',
+            userId: currentUser.id,
+            title: '',
+            body: '',
         }
     );
     const handleChange = evt => {
@@ -21,10 +21,11 @@ function FormEditPost(props) {
         setPost({ [name]: newValue });
     }
     const handleSubmit = async () => {
-        const newPosts = posts;
-        newPosts[index] = post
-        setPosts(newPosts)
-        console.log(posts);
+        post.id = idPost;
+        let newPost = [...posts];
+        newPost.push(post)
+        console.log('newPost', newPost);
+        setPosts(newPost);
     }
     return (
         <Modal
@@ -35,13 +36,13 @@ function FormEditPost(props) {
         >
             <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-vcenter">
-                    Edit Post
+                    Add Comment
             </Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <div className="form-group">
                     <label htmlFor="exampleInputEmail1">ID</label>
-                    <input className="form-control" type="input" value={post.id} readOnly />
+                    <input className="form-control" type="input" value={idPost} readOnly />
                 </div>
                 <div className="form-group">
                     <label htmlFor="exampleInputPassword1">Title</label>
@@ -53,7 +54,7 @@ function FormEditPost(props) {
                 </div>
                 <div className="form-group">
                     <label htmlFor="exampleInputPassword1">Created By</label>
-                    <input className="form-control" type="input" readOnly />
+                    <input className="form-control" type="input" defaultValue={currentUser.Username} readOnly />
                 </div>
             </Modal.Body>
             <Modal.Footer>
@@ -66,4 +67,4 @@ function FormEditPost(props) {
     );
 }
 
-export default FormEditPost;
+export default FormAddComment;
