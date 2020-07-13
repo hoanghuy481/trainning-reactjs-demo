@@ -8,8 +8,8 @@ import Pagination from '../components/Pagination';
 import UserContext from '../context/UserContext';
 
 function ListPostPage() {
-    const { posts, setPosts, setOrderBy, setOrderDir } = useContext(UserContext);
-    const [postsOrigin, setPostOrigin] = useState([]);
+    const { posts, setPosts, setOrderBy, setOrderDir, postsUpdate } = useContext(UserContext);
+    const [postsOrigin, setPostOrigin] = useState([]);//lưu lại Posts data gốc trước khi filter
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [postPerPage] = useState(10);
@@ -18,20 +18,21 @@ function ListPostPage() {
         const fetchPost = async () => {
             setLoading(true);
             const res = await axios.get('https://jsonplaceholder.typicode.com/posts');
-            setPosts(res.data);
             setPostOrigin(res.data);
+            setPosts(res.data);
             setLoading(false);
+            
         }
         fetchPost();
     }, [setPosts]);
 
     const indexOfLastPost = currentPage * postPerPage;
     const indexOfFirstPost = indexOfLastPost - postPerPage;
-    const currentPost = posts.slice(indexOfFirstPost, indexOfLastPost);
+    const currentPost = posts.slice(indexOfFirstPost, indexOfLastPost);//số lượng trang đã phân
     const paginate = pageNumber => setCurrentPage(pageNumber);
-
+    
     const sortByID = (orderBy, orderDir) => {
-        setPosts(funcOrderBy(posts, [orderBy], [orderDir]));
+        setPosts(funcOrderBy(postsUpdate, [orderBy], [orderDir]));// sort Post khi Posts data đã được cập nhật thêm total comments
         setOrderBy(orderBy);
         setOrderDir(orderDir);
     };

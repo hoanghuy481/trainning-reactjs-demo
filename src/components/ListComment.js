@@ -1,11 +1,21 @@
 import React, { useContext } from 'react';
 import { Link } from "react-router-dom";
+import axios from 'axios';
 
 import UserContext from '../context/UserContext';
 
 function ListComment(props) {
     let { comment, index } = props;
-    const { user } = useContext(UserContext);
+    const { user, comments, setComments } = useContext(UserContext);
+
+    const handleDelete = async () => {
+        const index = comments.map(comment => { return comment.id; }).indexOf(comment.id)// tìm vị trí của post trong mảng
+        await axios.delete (`https://jsonplaceholder.typicode.com/posts/${comment.id}`)
+        const a1 = comments.slice(0, index);// xoá các phần tử trước tính từ phần tử ta chọn
+        const a2 = comments.slice(index + 1, comments.length); //xoá các phần tử sau tính từ phần tử ta chọn
+        const new_arr = a1.concat(a2); // gộp các phần tử đã xoá
+        setComments(new_arr);
+    };
 
     return (
         <tbody>
@@ -22,11 +32,10 @@ function ListComment(props) {
                     <Link to={`../user-details/${user.id}`}>
                         {user.name}
                     </Link>
-
                 </th>
                 <td>
                     <button className="btn btn-warning" type="button">Edit</button>
-                    <button className="btn btn-danger" type="button">Delete</button>
+                    <button onClick={handleDelete} className="btn btn-danger" type="button">Delete</button>
                 </td>
             </tr>
         </tbody>
