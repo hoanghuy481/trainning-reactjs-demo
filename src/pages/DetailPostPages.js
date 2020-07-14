@@ -82,14 +82,14 @@ function DetailPostPages(props) {
             <h1>Chi tiết Post</h1>
             {xDetailPost}
             <h1>Danh sách Comment</h1>
-            <ControlComment idPost={id} onClickFilter={onClickFilter} sortByID={sortByID} />
+            <ControlComment postId={id} onClickFilter={onClickFilter} sortByID={sortByID} />
             <table className="table">
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
-                        <th scope="col">Title</th>
-                        <th scope="col">Created At</th>
-                        <th scope="col">Created By</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Body</th>
+                        <th scope="col">Email</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>

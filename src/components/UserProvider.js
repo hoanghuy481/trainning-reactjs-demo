@@ -12,9 +12,9 @@ const UserProvider = (props) => {
     const [orderDir, setOrderDir] = useState('asc');
     const [currentUser, setCurrentUser] = useState({
         id:         '1',
-        Email:      'Sincere@april.biz',
-        Name :      'Leanne Graham',
-        Phone:      '1-770-736-8031 x56442',
+        email:      'Sincere@april.biz',
+        name :      'Leanne Graham',
+        phone:      '1-770-736-8031 x56442',
         Username:   'Bret'
     });
     

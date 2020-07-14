@@ -5,8 +5,8 @@ import axios from 'axios';
 import UserContext from '../context/UserContext';
 
 function ListComment(props) {
-    let { comment, index } = props;
-    const { user, comments, setComments } = useContext(UserContext);
+    let { comment } = props;
+    const { comments, setComments } = useContext(UserContext);
 
     const handleDelete = async () => {
         const index = comments.map(comment => { return comment.id; }).indexOf(comment.id)// tìm vị trí của post trong mảng
@@ -26,12 +26,12 @@ function ListComment(props) {
                         {comment.name}
                     </Link>
                 </th>
-                <td>10/01/1998</td>
-                <th>
-                    <Link to={`../user-details/${user.id}`}>
-                        {user.name}
-                    </Link>
-                </th>
+                <td>
+                    {comment.body}
+                </td>
+                <td>
+                    {comment.email}
+                </td>
                 <td>
                     <button className="btn btn-warning" type="button">Edit</button>
                     <button onClick={handleDelete} className="btn btn-danger" type="button">Delete</button>

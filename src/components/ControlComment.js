@@ -14,7 +14,7 @@ function ControlComment(props) {
                 <Button variant="btn btn-success btn-block" onClick={() => setModalShow(true)}>
                     Add Comment
                     </Button>
-                <FormAddComment idPost={props.idPost} show={modalShow} onHide={() => setModalShow(false)} />
+                <FormAddComment postId={props.postId} show={modalShow} onHide={() => setModalShow(false)} />
             </div>
         </div>
     );
