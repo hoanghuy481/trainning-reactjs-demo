@@ -5,7 +5,7 @@ import UserContext from '../../context/UserContext';
 
 function FormAddPost(props) {
     const { posts, setPosts, currentUser } = useContext(UserContext);
-    let idPost = posts.length+1
+    let postId = posts.length+1
     const [post, setPost] = useReducer(
         (state, newState) => ({ ...state, ...newState }),
         {
@@ -20,11 +20,10 @@ function FormAddPost(props) {
         const newValue = evt.target.value;
         setPost({ [name]: newValue });
     }
-    const handleSubmit = async () => {
-        post.id = idPost;
+    const handleSubmit = () => {
+        post.id = postId;
         let newPost = [...posts];
-        newPost.push(post)
-        console.log('newPost', newPost);
+        newPost.push(post);
         setPosts(newPost);
     }
     return (
@@ -42,7 +41,7 @@ function FormAddPost(props) {
             <Modal.Body>
                 <div className="form-group">
                     <label htmlFor="exampleInputEmail1">ID</label>
-                    <input className="form-control" type="input" value={idPost} readOnly />
+                    <input className="form-control" type="input" value={postId} readOnly />
                 </div>
                 <div className="form-group">
                     <label htmlFor="exampleInputPassword1">Title</label>

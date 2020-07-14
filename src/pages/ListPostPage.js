@@ -16,6 +16,7 @@ class ListPostPage extends Component {
             loading: false,
             currentPage: 1,
             postPerPage: 10,
+            currentPost: ''
         }
     }
     fetchPost = async () => {
@@ -33,11 +34,13 @@ class ListPostPage extends Component {
         this.fetchPost();
     }
 
-    componentDidUpdate(prevProps){
-        const { setPosts, posts } = this.context;
-        if(prevProps.posts !== posts){
-            setPosts(posts)
-        }
+    componentDidUpdate(){
+        // const { setPosts, posts } = this.context;
+        // if(posts !== posts){
+        //     setPosts(posts)
+        // }
+        // console.log( 'post', posts);
+       
     }
 
     render() { 
@@ -45,7 +48,7 @@ class ListPostPage extends Component {
         const { currentPage, postsOrigin, postPerPage } = this.state;
         const indexOfLastPost = currentPage * postPerPage;
         const indexOfFirstPost = indexOfLastPost - postPerPage;
-       const currentPost = posts.slice(indexOfFirstPost, indexOfLastPost);//số lượng trang đã phân
+        const currentPost = posts.slice(indexOfFirstPost, indexOfLastPost);//số lượng trang đã phân
         const paginate = pageNumber => this.setState({ currentPage: pageNumber });
         
         const sortByID = (orderBy, orderDir) => {
@@ -68,7 +71,7 @@ class ListPostPage extends Component {
         let xhtmlPost = null;
         if (loading) {
             return <h2>Loading...</h2>
-        } else if (!_isEmpty(currentPost)) {
+        } else if (!_isEmpty(posts)) {
             if (currentPost.length > 0) {
                 xhtmlPost = currentPost
                     .map((post, i) => {

@@ -65,7 +65,7 @@ function ListPosts(props) {
                     <Button variant="warning" onClick={() => setModalShow(true)}>
                         Edit
                     </Button>
-                    <FormEditPost show={modalShow} onHide={() => setModalShow(false)} index={index} item={props.post} />
+                    <FormEditPost show={modalShow} onHide={() => setModalShow(false)} index={index} item={item} />
                     <button onClick={handleDelete} className="btn btn-danger" type="button">Delete</button>
                 </td>
             </tr>

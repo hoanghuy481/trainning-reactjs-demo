@@ -3,29 +3,33 @@ import { Button, Modal } from 'react-bootstrap';
 
 import UserContext from '../../context/UserContext';
 
-function FormEditPost(props) {
-    let { item, index } = props;
-    const { posts, setPosts } = useContext(UserContext);
-    const [post, setPost] = useReducer(
+function FormEditComment(props) {
+    let { item, index, postId } = props;
+    const { comments, setComments, currentUser} = useContext(UserContext);
+    const [comment, setComment] = useReducer(
         (state, newState) => ({ ...state, ...newState }),
         {
-            userId: item.userId,
+            postId: '',
             id: '',
-            title: item.title,
+            name: item.name,
             body: item.body,
+            email: '',
         }
     );
     const handleChange = evt => {
         const name = evt.target.name;
         const newValue = evt.target.value;
-        setPost({ [name]: newValue });
+        setComment({ [name]: newValue });
     }
     const handleSubmit = async () => {
-        post.id = item.id;
-        const newPosts = [...posts];
-        newPosts[index] = post
-        setPosts(newPosts)
-        console.log(posts[0]);
+        comment.postId = postId;
+        comment.id = item.id;
+        comment.email = currentUser.email;
+        let newComments = [...comments];
+        newComments[index] = comment
+        setComments(newComments)
+        console.log(comments);
+        
     }
     return (
         <Modal
@@ -36,7 +40,7 @@ function FormEditPost(props) {
         >
             <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-vcenter">
-                    Edit Post
+                    Edit Comment
             </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -45,16 +49,16 @@ function FormEditPost(props) {
                     <input className="form-control" type="input" value={item.id} readOnly />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="exampleInputPassword1">Title</label>
-                    <input type="input" className="form-control" name="title" onChange={handleChange} defaultValue={item.title} placeholder="Title" />
+                    <label htmlFor="exampleInputPassword1">Name</label>
+                    <input type="input" className="form-control" name="name" onChange={handleChange} defaultValue={item.name} placeholder="Title" />
                 </div>
                 <div className="form-group">
                     <label htmlFor="exampleInputPassword1">Body</label>
                     <input type="input" className="form-control" name="body" onChange={handleChange} defaultValue={item.body} placeholder="Body" />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="exampleInputPassword1">Created By</label>
-                    <input className="form-control" type="input" readOnly />
+                    <label htmlFor="exampleInputPassword1">Email</label>
+                    <input className="form-control" type="input" readOnly defaultValue={currentUser.email} />
                 </div>
             </Modal.Body>
             <Modal.Footer>
@@ -67,4 +71,4 @@ function FormEditPost(props) {
     );
 }
 
-export default FormEditPost;
+export default FormEditComment;

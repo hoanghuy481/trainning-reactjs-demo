@@ -71,7 +71,7 @@ function DetailPostPages(props) {
         if (currentPost.length > 0) {
             xComment = comments.map((comment, i) => {
                 return (
-                    <ListComment key={i} index={i} comment={comment} />
+                    <ListComment postId={id} key={i} index={i} comment={comment} />
                 );
             });
         }

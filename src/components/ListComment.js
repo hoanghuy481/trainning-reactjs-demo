@@ -1,16 +1,19 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from "react-router-dom";
 import axios from 'axios';
+import { Button } from 'react-bootstrap';
 
+import FormEditComment from '../components/Modal/FormEditComment';
 import UserContext from '../context/UserContext';
 
 function ListComment(props) {
-    let { comment } = props;
+    let { comment, index, postId } = props;
     const { comments, setComments } = useContext(UserContext);
+    const [modalShow, setModalShow] = useState(false);
 
     const handleDelete = async () => {
         const index = comments.map(comment => { return comment.id; }).indexOf(comment.id)// tìm vị trí của post trong mảng
-        await axios.delete (`https://jsonplaceholder.typicode.com/posts/${comment.id}`)
+        await axios.delete(`https://jsonplaceholder.typicode.com/posts/${comment.id}`)
         const a1 = comments.slice(0, index);// xoá các phần tử trước tính từ phần tử ta chọn
         const a2 = comments.slice(index + 1, comments.length); //xoá các phần tử sau tính từ phần tử ta chọn
         const new_arr = a1.concat(a2); // gộp các phần tử đã xoá
@@ -33,7 +36,10 @@ function ListComment(props) {
                     {comment.email}
                 </td>
                 <td>
-                    <button className="btn btn-warning" type="button">Edit</button>
+                    <Button variant="warning" onClick={() => setModalShow(true)}>
+                        Edit
+                    </Button>
+                    <FormEditComment show={modalShow} onHide={() => setModalShow(false)} postId={postId} index={index} item={comment} />
                     <button onClick={handleDelete} className="btn btn-danger" type="button">Delete</button>
                 </td>
             </tr>
