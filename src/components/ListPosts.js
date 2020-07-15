@@ -24,8 +24,8 @@ function ListPosts(props) {
             let resComments = await axios.get(`https://jsonplaceholder.typicode.com/posts/${item.userId}/comments`);
             setComments(resComments.data);
             setLoading(false);
-            // const newPosts = posts.map(post => ({ ...post, total: resComments.data.length }))
-            // setPostsUpdate(newPosts);
+            const newPosts = posts.map(post => ({ ...post, total: resComments.data.length }))
+            setPostsUpdate(newPosts);// đưa total comment vào mảng post clone
         };
         fetch();
     }, [item.userId, setPosts, posts, setPostsUpdate]);

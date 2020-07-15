@@ -5,7 +5,7 @@ import UserContext from '../../context/UserContext';
 
 function FormEditPost(props) {
     let { item, index, total } = props;
-    const { posts, setPosts, setDetailPost, postsUpdate, setPostsUpdate} = useContext(UserContext);
+    const { posts, setPosts, setDetailPost, postsUpdate, setPostsUpdate } = useContext(UserContext);
     const [post, setPost] = useReducer(
         (state, newState) => ({ ...state, ...newState }),
         {
@@ -13,11 +13,11 @@ function FormEditPost(props) {
             id: '',
             title: item.title,
             body: item.body,
-            totalComment: total
+            total: total
         }
     );
-   
-    
+
+
     const handleChange = evt => {
         const name = evt.target.name;
         const newValue = evt.target.value;
@@ -25,9 +25,9 @@ function FormEditPost(props) {
     }
     const handleSubmit = async () => {
         post.id = item.id;
-        const newPosts = [...posts];
-        newPosts[index] = post;
-        setPosts(newPosts);
+        setPostsUpdate([...posts]);
+        postsUpdate[index] = post;
+        setPosts(postsUpdate);
         await fetch(`https://jsonplaceholder.typicode.com/posts/${item.id}`, {
             method: 'PUT',
             body: JSON.stringify({ post }),
@@ -37,10 +37,9 @@ function FormEditPost(props) {
         })
             .then(response => response.json())
             .then(json => setDetailPost(json.post))
-        let arr = posts.map(item => ({ ...item, total: post.totalComment }))
-        setPostsUpdate([...arr]);
+        let arr = posts.map(item => ({ ...item, total: post.total }))
+        setPostsUpdate([...postsUpdate]);
         //setPosts(arr);
-        
     }
 
     return (
@@ -70,7 +69,7 @@ function FormEditPost(props) {
                 </div>
                 <div className="form-group">
                     <label htmlFor="exampleInputPassword1">Total Comment</label>
-                    <input type="number" className="form-control" name="totalComment" min="0" onChange={handleChange} defaultValue={total}  />
+                    <input type="number" className="form-control" name="total" min="0" onChange={handleChange} defaultValue={total} />
                 </div>
             </Modal.Body>
             <Modal.Footer>
