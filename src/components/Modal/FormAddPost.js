@@ -4,8 +4,9 @@ import { Button, Modal } from 'react-bootstrap';
 import UserContext from '../../context/UserContext';
 
 function FormAddPost(props) {
-    const { posts, setPosts, currentUser } = useContext(UserContext);
-    let postId = posts.length+1
+    const { posts, setPosts, currentUser, setDetailPost } = useContext(UserContext);
+    let postId = posts.length + 1;
+
     const [post, setPost] = useReducer(
         (state, newState) => ({ ...state, ...newState }),
         {
@@ -20,11 +21,26 @@ function FormAddPost(props) {
         const newValue = evt.target.value;
         setPost({ [name]: newValue });
     }
-    const handleSubmit = () => {
-        post.id = postId;
-        let newPost = [...posts];
-        newPost.push(post);
-        setPosts(newPost);
+    const handleSubmit = async () => {
+        if (post.body === '' || post.title === '') {
+            alert('Vui lòng điền đầy đủ thông tin')
+        } else {
+            post.id = postId;
+            let newPost = [...posts];
+            newPost.push(post);
+            setPosts(newPost);
+            alert('Thêm comment thành công');
+            props.onHide();
+            await fetch('https://jsonplaceholder.typicode.com/posts/', {
+                method: 'POST',
+                body: JSON.stringify({ post }),
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                }
+            })
+                .then(response => response.json())
+                .then(json => setDetailPost(json.post))
+        }
     }
     return (
         <Modal

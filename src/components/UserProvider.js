@@ -5,23 +5,29 @@ import UserContext from '../context/UserContext';
 const UserProvider = (props) => {
     const [user, setUser] = useState({});
     const [posts, setPosts] = useState([]);
+    const [detailPost, setDetailPost] = useState({});
     const [loading, setLoading] = useState(false);
     const [postsUpdate, setPostsUpdate] = useState([]);
     const [comments, setComments] = useState([]);
+    const [detailComment, setDetailComment] = useState({});
     const [orderBy, setOrderBy] = useState('id');
     const [orderDir, setOrderDir] = useState('asc');
     const [currentUser, setCurrentUser] = useState({
-        id:         '1',
-        email:      'Sincere@april.biz',
-        name :      'Leanne Graham',
-        phone:      '1-770-736-8031 x56442',
-        Username:   'Bret'
+        id: '1',
+        email: 'Sincere@april.biz',
+        name: 'Leanne Graham',
+        phone: '1-770-736-8031 x56442',
+        Username: 'Bret'
     });
     
     return (
         <UserContext.Provider
             value={{
-                loading, 
+                detailPost,
+                setDetailPost,
+                detailComment,
+                setDetailComment,
+                loading,
                 setLoading,
                 currentUser,
                 setCurrentUser,
@@ -35,7 +41,7 @@ const UserProvider = (props) => {
                 setOrderBy,
                 orderDir,
                 setOrderDir,
-                postsUpdate, 
+                postsUpdate,
                 setPostsUpdate
             }}>
             {props.children}

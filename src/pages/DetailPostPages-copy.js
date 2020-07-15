@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { filter, includes, isEmpty as _isEmpty, orderBy as funcOrderBy } from 'lodash';
 import { Button } from 'react-bootstrap';
+import { Link } from "react-router-dom";
 
 import FormEditPost from '../components/Modal/FormEditPost';
 import ControlComment from '../components/ControlComment';
@@ -13,7 +14,7 @@ import UserContext from '../context/UserContext';
 function DetailPostPages(props) {
 
     const id = props.match.params.id;
-    const { comments, setComments, setOrderBy, setOrderDir, detailPost, setDetailPost, user } = useContext(UserContext);
+    const { comments, setComments, setOrderBy, setOrderDir, detailPost, setDetailPost, user, setUser } = useContext(UserContext);
     const [commentsOrigin, setCommentsOrigin] = useState([]);
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
@@ -28,16 +29,20 @@ function DetailPostPages(props) {
             const resComment = await axios.get(`https://jsonplaceholder.typicode.com/posts/${id}/comments`);
             setComments(resComment.data);
             setCommentsOrigin(resComment.data);
+            if (!_isEmpty(detailPost)) {
+                const res = await axios.get(`https://jsonplaceholder.typicode.com/users/${detailPost.userId}`);
+                setUser(res.data);
+            }
             setLoading(false);
         };
         fetchPost();
-    }, [id, setDetailPost, setComments]);
+    }, [id, setDetailPost,setUser, setComments]);
+    console.log(user);
     
     const indexOfLastPost = currentPage * postPerPage;
     const indexOfFirstPost = indexOfLastPost - postPerPage;
     const currentPost = comments.slice(indexOfFirstPost, indexOfLastPost);
     const paginate = pageNumber => setCurrentPage(pageNumber);
-    let xDetailPost = null;
     let xComment = null;
 
     const sortByID = (orderBy, orderDir) => {
@@ -58,11 +63,19 @@ function DetailPostPages(props) {
         }
     }
 
-     const handleDelete = async () => {
+    const handleDelete = async () => {
         await axios.delete(`https://jsonplaceholder.typicode.com/posts/${detailPost.id}`)
     };
+    let username = null;
 
-  
+    if (loading) {
+        username = <p>Loading...</p>
+    } else if (!_isEmpty(user)) {
+        username =
+            <Link to={`../user-details/${user.id}`}>
+                {user.name}
+            </Link>
+    }
 
     if (loading) {
         xComment =
@@ -74,7 +87,6 @@ function DetailPostPages(props) {
                 </tr>
             </tbody>
     } else if (!_isEmpty(currentPost, detailPost)) {
-        xDetailPost = <DetailPost post={detailPost} />
         if (currentPost.length > 0) {
             xComment = currentPost.map((comment, i) => {
                 return (
@@ -112,7 +124,12 @@ function DetailPostPages(props) {
                         <input type="text" readOnly className="form-control-plaintext" defaultValue="10/01/1998" />
                     </div>
                 </div>
-                {xDetailPost}
+                <div className="form-group row">
+                    <label className="col-sm-2 col-form-label">Created By</label>
+                    <div className="col-sm-10">
+                        {username}
+                    </div>
+                </div>
                 <div className="form-group row">
                     <div className="col-sm-10">
                         <Button variant="warning" onClick={() => setModalShow(true)}>

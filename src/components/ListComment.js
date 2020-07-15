@@ -14,8 +14,8 @@ function ListComment(props) {
     const handleDelete = async () => {
         const index = comments.map(comment => { return comment.id; }).indexOf(comment.id)// tìm vị trí của post trong mảng
         await axios.delete(`https://jsonplaceholder.typicode.com/posts/${comment.id}`)
-        const a1 = comments.slice(0, index);// xoá các phần tử trước tính từ phần tử ta chọn
-        const a2 = comments.slice(index + 1, comments.length); //xoá các phần tử sau tính từ phần tử ta chọn
+        const a1 = comments.slice(0, index);// xoá các phần tử trước tính từ phần tử đã chọn
+        const a2 = comments.slice(index + 1, comments.length); //xoá các phần tử sau tính từ phần tử đã chọn
         const new_arr = a1.concat(a2); // gộp các phần tử đã xoá
         setComments(new_arr);
     };

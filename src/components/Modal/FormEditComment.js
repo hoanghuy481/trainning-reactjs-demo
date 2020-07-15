@@ -5,7 +5,7 @@ import UserContext from '../../context/UserContext';
 
 function FormEditComment(props) {
     let { item, index, postId } = props;
-    const { comments, setComments, currentUser} = useContext(UserContext);
+    const { comments, setComments, currentUser, setDetailComment } = useContext(UserContext);
     const [comment, setComment] = useReducer(
         (state, newState) => ({ ...state, ...newState }),
         {
@@ -26,10 +26,17 @@ function FormEditComment(props) {
         comment.id = item.id;
         comment.email = currentUser.email;
         let newComments = [...comments];
-        newComments[index] = comment
-        setComments(newComments)
-        console.log(comments);
-        
+        newComments[index] = comment;
+        setComments(newComments);
+        await fetch(`https://jsonplaceholder.typicode.com/comments/${item.id}`, {
+            method: 'PUT',
+            body: JSON.stringify({ comment }),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
+        })
+            .then(response => response.json())
+            .then(json => setDetailComment(json.comment))
     }
     return (
         <Modal
@@ -65,7 +72,7 @@ function FormEditComment(props) {
                 <Button onClick={props.onHide}>Close</Button>
                 <Button variant="primary" onClick={handleSubmit}>
                     Save Changes
-          </Button>
+                </Button>
             </Modal.Footer>
         </Modal>
     );

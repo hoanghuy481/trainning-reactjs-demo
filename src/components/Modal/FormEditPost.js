@@ -5,7 +5,7 @@ import UserContext from '../../context/UserContext';
 
 function FormEditPost(props) {
     let { item, index } = props;
-    const { posts, setPosts } = useContext(UserContext);
+    const { posts, setPosts, detailPost, setDetailPost } = useContext(UserContext);
     const [post, setPost] = useReducer(
         (state, newState) => ({ ...state, ...newState }),
         {
@@ -23,9 +23,18 @@ function FormEditPost(props) {
     const handleSubmit = async () => {
         post.id = item.id;
         const newPosts = [...posts];
-        newPosts[index] = post
-        setPosts(newPosts)
-        console.log(posts[0]);
+        newPosts[index] = post;
+        setPosts(newPosts);
+        await fetch(`https://jsonplaceholder.typicode.com/posts/${item.id}`, {
+            method: 'PUT',
+            body: JSON.stringify({ post }),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
+        })
+            .then(response => response.json())
+            .then(json => setDetailPost(json.post))
+            console.log(detailPost);
     }
     return (
         <Modal
@@ -54,7 +63,7 @@ function FormEditPost(props) {
                 </div>
                 <div className="form-group">
                     <label htmlFor="exampleInputPassword1">Created By</label>
-                    <input className="form-control" type="input" readOnly />
+                    <input className="form-control" defaultValue={props.username} type="input" readOnly />
                 </div>
             </Modal.Body>
             <Modal.Footer>

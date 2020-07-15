@@ -34,15 +34,6 @@ class ListPostPage extends Component {
         this.fetchPost();
     }
 
-    componentDidUpdate(){
-        // const { setPosts, posts } = this.context;
-        // if(posts !== posts){
-        //     setPosts(posts)
-        // }
-        // console.log( 'post', posts);
-       
-    }
-
     render() { 
         const { posts, setPosts, setOrderBy, setOrderDir, loading, postsUpdate } = this.context;
         const { currentPage, postsOrigin, postPerPage } = this.state;
