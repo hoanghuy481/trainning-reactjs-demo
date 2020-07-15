@@ -24,8 +24,8 @@ function ListPosts(props) {
             let resComments = await axios.get(`https://jsonplaceholder.typicode.com/posts/${item.userId}/comments`);
             setComments(resComments.data);
             setLoading(false);
-            const newPosts = posts.map(post => ({ ...post, total: resComments.data.length }))
-            setPostsUpdate(newPosts);
+            // const newPosts = posts.map(post => ({ ...post, total: resComments.data.length }))
+            // setPostsUpdate(newPosts);
         };
         fetch();
     }, [item.userId, setPosts, posts, setPostsUpdate]);
@@ -65,7 +65,7 @@ function ListPosts(props) {
                     <Button variant="warning" onClick={() => setModalShow(true)}>
                         Edit
                     </Button>
-                    <FormEditPost show={modalShow} onHide={() => setModalShow(false)} index={index} item={item} />
+                    <FormEditPost show={modalShow} onHide={() => setModalShow(false)} index={index} total={comments.length} item={item} />
                     <button onClick={handleDelete} className="btn btn-danger" type="button">Delete</button>
                 </td>
             </tr>

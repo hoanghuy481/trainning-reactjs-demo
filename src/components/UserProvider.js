@@ -19,6 +19,8 @@ const UserProvider = (props) => {
         phone: '1-770-736-8031 x56442',
         Username: 'Bret'
     });
+    console.log(postsUpdate);
+    
     
     return (
         <UserContext.Provider
